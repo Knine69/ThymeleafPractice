@@ -8,5 +8,4 @@ public interface UserService {
     List<User> getAllUsers();
     void addUser(User user);
     User getUserById(long id);
-    void updateUser(User user);
 }

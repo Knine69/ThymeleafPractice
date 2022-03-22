@@ -38,13 +38,7 @@ public class UserController {
         userService.addUser(user);
         return "redirect:/";
     }
-
-    @RequestMapping(value = "/updateUser/{user}", method = RequestMethod.POST, consumes = APPLICATION_JSON)
-    public String updateUser(@PathVariable(value = "user") User user){
-        userService.updateUser(user);
-        return "redirect:/";
-    }
-
+    
     @GetMapping("/showFormForUpdate/{id}")
     public String showFormForUpdate(@PathVariable(value = "id") long id, Model model){
         User user = userService.getUserById(id);

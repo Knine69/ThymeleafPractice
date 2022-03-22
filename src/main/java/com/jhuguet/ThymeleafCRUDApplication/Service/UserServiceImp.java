@@ -31,19 +31,4 @@ public class UserServiceImp implements UserService{
         User user = optional.get();
         return user;
     }
-
-    @Override
-    public void updateUser(User user) {
-        User userInDB = getUserById(user.getId());
-        //Update fields in DB object
-        userInDB.setEmail(user.getEmail());
-        userInDB.setLastName(user.getLastName());
-        userInDB.setFirstName(user.getFirstName());
-        try{
-            userRepository.save(userInDB);
-        } catch(RuntimeException e) {
-            e.printStackTrace();
-        }
-        System.out.println("User " + user.getId() + " successfully updated!");
-    }
 }
