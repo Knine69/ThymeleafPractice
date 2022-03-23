@@ -48,4 +48,9 @@ public class UserServiceImp implements UserService{
         Pageable pageable = PageRequest.of(pageNo -1, pageSize, sort);
         return userRepository.findAll(pageable);
     }
+
+    @Override
+    public List<User> findByKeyWord(String keyword) {
+        return userRepository.findByKeyword(keyword);
+    }
 }
