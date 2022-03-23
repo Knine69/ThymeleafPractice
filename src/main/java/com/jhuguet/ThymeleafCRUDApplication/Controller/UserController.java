@@ -19,7 +19,7 @@ public class UserController {
 
     @GetMapping("/")
     public String viewHomePage(Model model){
-        return findPaginated(1, model);
+        return findPaginated(1, model, "firstName", "asc");
     }
 
     @GetMapping("/showNewUserForm")
@@ -49,14 +49,18 @@ public class UserController {
     }
 
     @GetMapping("/page/{pageNo}")
-    public String findPaginated(@PathVariable(value ="pageNo") int pageNo, Model model){
+    public String findPaginated(@PathVariable(value ="pageNo") int pageNo, Model model,
+        @RequestParam("sortField") String sortField, @RequestParam("sortDir") String sortDir){
         int pageSize = 5;
-        Page<User> page = userService.findPaginated(pageNo, pageSize);
+        Page<User> page = userService.findPaginated(pageNo, pageSize, sortField, sortDir);
         List<User> userList = page.getContent();
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
-        model.addAttribute("listOfUsers", userList);
+        model.addAttribute("usersList", userList);
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equalsIgnoreCase("asc")? "desc":"asc");
         return "index";
     }
 }
