@@ -11,5 +11,4 @@ public interface UserService {
     User getUserById(long id);
     void deleteUser(long id);
     Page<User> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
-    List<User> findByKeyWord(String keyword);
 }

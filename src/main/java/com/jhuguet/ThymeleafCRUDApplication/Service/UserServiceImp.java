@@ -49,8 +49,4 @@ public class UserServiceImp implements UserService{
         return userRepository.findAll(pageable);
     }
 
-    @Override
-    public List<User> findByKeyWord(String keyword) {
-        return userRepository.findByKeyword(keyword);
-    }
 }
