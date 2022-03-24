@@ -22,26 +22,26 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/")
-    public String viewHomePage(Model model, String filterWord){
-        return findPaginated(1, model, "firstName", "asc", filterWord);
+    public String viewHomePage(Model model) {
+        return findPaginated(1, model, "firstName", "asc", "");
     }
 
 
     @GetMapping("/showNewUserForm")
-    public String viewNewUserForm(Model model){
+    public String viewNewUserForm(Model model) {
         User user = new User();
         model.addAttribute("user", user);
         return "new_user";
     }
 
     @GetMapping("/deleteUser/{id}")
-    public String deleteUser(@PathVariable(value = "id") long id){
+    public String deleteUser(@PathVariable(value = "id") long id) {
         userService.deleteUser(id);
         return "redirect:/";
     }
 
     @PostMapping("/saveUser")
-    public String saveUser(@ModelAttribute("user") User user){
+    public String saveUser(@ModelAttribute("user") User user) {
         user.setFirstName(user.getFirstName().trim());
         user.setLastName(user.getFirstName().trim());
         userService.addUser(user);
@@ -49,32 +49,33 @@ public class UserController {
     }
 
     @GetMapping("/showFormForUpdate/{id}")
-    public String showFormForUpdate(@PathVariable(value = "id") long id, Model model){
+    public String showFormForUpdate(@PathVariable(value = "id") long id, Model model) {
         User user = userService.getUserById(id);
         model.addAttribute("user", user);
         return "update_user";
     }
 
     @GetMapping("/page/{pageNo}")
-    public String findPaginated(@PathVariable(value ="pageNo") int pageNo, Model model,
-        @RequestParam("sortField") String sortField, @RequestParam("sortDir") String sortDir, String filter){
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model,
+                                @RequestParam("sortField") String sortField, @RequestParam("sortDir") String sortDir,
+                                @RequestParam("filterBy") String filterBy) {
         int pageSize = 5;
         Page<User> page = userService.findPaginated(pageNo, pageSize, sortField, sortDir);
-        List<User> userList= null;
-        if(filter != ""){
-            userList = page.getContent().stream()
-                    .filter(x-> x.getLastName().trim().equals(filter) || x.getFirstName().trim().equals(filter))
-                    .collect(Collectors.toList());
-        }else{
-            userList = page.getContent();
-        }
+        if (userList == null) userList = page.getContent();
+
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
-        model.addAttribute("usersList", userList);
+        model.addAttribute("usersList", filterBy.equals("") ? userList : filterUsers(filterBy));
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
-        model.addAttribute("reverseSortDir", sortDir.equalsIgnoreCase("asc")? "desc":"asc");
+        model.addAttribute("reverseSortDir", sortDir.equalsIgnoreCase("asc") ? "desc" : "asc");
         return "index";
+    }
+
+    public List<User> filterUsers(String filter) {
+        return userList.stream()
+                .filter(x -> x.getLastName().trim().equals(filter) || x.getFirstName().trim().equals(filter))
+                .collect(Collectors.toList());
     }
 }

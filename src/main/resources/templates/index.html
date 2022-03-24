@@ -12,13 +12,6 @@
 <body>
 <div class="container my-2">
     <h1>Employee list</h1>
-    <form action="#" th:action="@{/}" method="get">
-        <div class="col-6 pb-4 pt-3 input-group rounded ">
-            <input type="search" class="form-control rounded px-2" placeholder="Search" aria-label="Search"
-                   aria-describedby="search-addon" th:name="filterWord"/>
-            <button type="submit" class="input-group-text border-0">Go</button>
-        </div>
-    </form>
     <a th:href="@{/showNewUserForm}" class="btn btn-primary btn-sm mb-3">Add User</a>
     <table class="table table-striped table-responsive-md">
         <thead>
@@ -58,24 +51,34 @@
             <div class="col-sm-1">
                     <span th:each="i: ${#numbers.sequence(1, totalPages)}">
                         <a th:if="${currentPage != i}"
-                           th:href="@{'/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
+                           th:href="@{'/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} +
+                                    '&filterBy=' + ${filterBy}}">
                             [[${i}]]</a>
                         <span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
                     </span>
             </div>
             <div class="col-sm-1">
                 <a th:if="${currentPage < totalPages}"
-                   th:href="@{'/page/' + ${currentPage + 1}+'?sortField='+${sortField}+'&sortDir='+${sortDir}}"
+                   th:href="@{'/page/' + ${currentPage + 1}+'?sortField='+${sortField}+'&sortDir='+${sortDir} +
+                            '&filterBy=' + ${filterBy}}"
                 >Next</a>
                 <span th:unless="${currentPage < totalPages}">Next</span> &nbsp; &nbsp;
             </div>
             <div class="col-sm-1">
                 <a th:if="${currentPage < totalPages}"
-                   th:href="@{'/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
+                   th:href="@{'/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir} +
+                   '&filterBy=' + ${filterBy}}"
                 >Last</a>
                 <span th:unless="${currentPage < totalPages}">Last</span> &nbsp; &nbsp;
             </div>
         </div>
+        <form action="#" th:action="@{/}" method="get">
+            <div class="col-6 pb-4 pt-3 input-group rounded ">
+                <input type="search" class="form-control rounded px-2" placeholder="Search" aria-label="Search"
+                       aria-describedby="search-addon" th:name="filterBy"/>
+                <button type="submit" class="input-group-text border-0">Go</button>
+            </div>
+        </form>
     </div>
 </div>
 </body>
