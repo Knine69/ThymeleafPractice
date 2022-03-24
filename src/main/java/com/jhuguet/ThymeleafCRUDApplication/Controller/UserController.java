@@ -43,7 +43,7 @@ public class UserController {
     @PostMapping("/saveUser")
     public String saveUser(@ModelAttribute("user") User user) {
         user.setFirstName(user.getFirstName().trim());
-        user.setLastName(user.getFirstName().trim());
+        user.setLastName(user.getLastName().trim());
         userService.addUser(user);
         return "redirect:/";
     }
