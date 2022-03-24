@@ -8,19 +8,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Controller
 public class UserController {
 
+    private List<User> userList;
+
     @Autowired
     private UserService userService;
 
     @GetMapping("/")
-    public String viewHomePage(Model model){
-        return findPaginated(1, model, "firstName", "asc");
+    public String viewHomePage(Model model, String filterWord){
+        return findPaginated(1, model, "firstName", "asc", filterWord);
     }
+
 
     @GetMapping("/showNewUserForm")
     public String viewNewUserForm(Model model){
@@ -37,6 +42,8 @@ public class UserController {
 
     @PostMapping("/saveUser")
     public String saveUser(@ModelAttribute("user") User user){
+        user.setFirstName(user.getFirstName().trim());
+        user.setLastName(user.getFirstName().trim());
         userService.addUser(user);
         return "redirect:/";
     }
@@ -50,10 +57,17 @@ public class UserController {
 
     @GetMapping("/page/{pageNo}")
     public String findPaginated(@PathVariable(value ="pageNo") int pageNo, Model model,
-        @RequestParam("sortField") String sortField, @RequestParam("sortDir") String sortDir){
+        @RequestParam("sortField") String sortField, @RequestParam("sortDir") String sortDir, String filter){
         int pageSize = 5;
         Page<User> page = userService.findPaginated(pageNo, pageSize, sortField, sortDir);
-        List<User> userList = page.getContent();
+        List<User> userList= null;
+        if(filter != ""){
+            userList = page.getContent().stream()
+                    .filter(x-> x.getLastName().trim().equals(filter) || x.getFirstName().trim().equals(filter))
+                    .collect(Collectors.toList());
+        }else{
+            userList = page.getContent();
+        }
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
