@@ -10,7 +10,5 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    @Query(value = "SELECT * from springapp.user u WHERE u.firstName LIKE %:keyword%" +
-            "OR u.lastName LIKE %:keyword%", nativeQuery = true)
-    List<User> findByKeyword(@Param("keyword") String keyword);
+
 }

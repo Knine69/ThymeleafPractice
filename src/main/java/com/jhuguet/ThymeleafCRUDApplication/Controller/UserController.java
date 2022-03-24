@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Controller
 public class UserController {
 
-    private List<User> userList;
+    private static List<User> userList = new ArrayList<>();
 
     @Autowired
     private UserService userService;
@@ -59,23 +59,26 @@ public class UserController {
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model,
                                 @RequestParam("sortField") String sortField, @RequestParam("sortDir") String sortDir,
                                 @RequestParam("filterBy") String filterBy) {
-        int pageSize = 5;
+        int pageSize = 4;
         Page<User> page = userService.findPaginated(pageNo, pageSize, sortField, sortDir);
-        if (userList == null) userList = page.getContent();
+        userList = page.getContent() ;
 
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
-        model.addAttribute("usersList", filterBy.equals("") ? userList : filterUsers(filterBy));
+        model.addAttribute("usersList", filterBy.isEmpty() ? userList : filterUsers(filterBy));
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", sortDir.equalsIgnoreCase("asc") ? "desc" : "asc");
+        model.addAttribute("filterBy", filterBy);
+
         return "index";
     }
 
     public List<User> filterUsers(String filter) {
         return userList.stream()
-                .filter(x -> x.getLastName().trim().equals(filter) || x.getFirstName().trim().equals(filter))
+                .filter(x -> x.getLastName().trim().equalsIgnoreCase(filter) ||
+                        x.getFirstName().trim().equalsIgnoreCase(filter))
                 .collect(Collectors.toList());
     }
 }
