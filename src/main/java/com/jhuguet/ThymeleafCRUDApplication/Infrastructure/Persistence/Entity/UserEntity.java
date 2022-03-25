@@ -1,10 +1,10 @@
-package com.jhuguet.ThymeleafCRUDApplication.Model;
+package com.jhuguet.ThymeleafCRUDApplication.Infrastructure.Persistence.Entity;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "User")
-public class User {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -50,3 +50,4 @@ public class User {
         this.email = email;
     }
 }
+

@@ -1,0 +1,81 @@
+In Hexagonal Architecture we have three layers:
+
+   Domain:
+
+        Main business logic, independent of any framework library besides some functional help
+        such as with constructors annotations or getters and setters, etc.
+
+        Consists of our entities model, our basic interface repository and the single responsibility
+        services for each functionalities we want to make use of in our core business logic.
+
+   Application:
+
+        Is the layer that maintains contact with Domain layer, mainly in the aspect that
+        application calls method implementations from the domain business logic layer
+
+        We also get in touch with some crucial clean architecture best practices, in this case
+        it would involve the Single Responsibility, pretty much like it was done previously in
+        the domain layer's services. Here, for each functionality we want to access, we would need
+        a "port" or "handler" that would make use of to access the domain layer of our application,
+        that is, to our services and model entities, or whichever resource needed.
+
+   Infrastructure:
+
+        It is the outermost layer of our application, completely detached to the main business logic
+        and is also the one responsible to receive any web requests made and subsequently route said
+        request to the appropriate "port" or "handler" that we want to consume.
+
+        Based on the framework which we will be using, then we would also need a determined repository
+        interface, an equivalent entity to our business core entity parameterized in the pertinent way
+        to contact our Database correctly and, lastly, use the entity declared in the core layer as well
+        as the method implementations which would contact the repository interface we first instantiated
+        in the Domain layer.
+
+        The way we would carry this on would be by calling our handlers and communicating with the
+        application layer. In the Application layer, our handler will be then responsible to come in
+        contact with the repository interface we declare in the Domain layer. Then, from our Infrastructure
+        layer we will implement said repository interface, connecting the framework functionality with
+        the abstract functionalities which we want to use to communicate with the Data Base based on the
+        Domain layer services that we created.
+
+*****************************************************************************************************************
+
+En Arquitectura Hexagonal tenemos tres capas:
+
+   Dominio:
+
+        Lógica comercial principal, independiente de cualquier biblioteca más allá de alguna ayuda funcional
+        como con anotaciones de constructores o getters y setters, etc.
+
+        Consiste en nuestro modelo de entidades, nuestro repositorio de interfaz básica y los servicios de
+        responsabilidad única para cada funcionalidad que queremos utilizar en nuestra lógica comercial central.
+
+   Aplicación:
+
+        Es la capa que mantiene contacto con la capa de Dominio, principalmente en el aspecto que
+        la aplicación llama a las implementaciones de métodos desde la capa de lógica empresarial del dominio
+
+        También nos ponemos en contacto con algunas de las mejores prácticas cruciales de arquitectura limpia,
+        en este caso involucraría la Responsabilidad Única, más o menos como se hizo anteriormente en
+        los servicios de la capa de Dominio. Aquí, para cada funcionalidad a la que queramos acceder, necesitaríamos
+        un "puerto" o "handler" del que se haría para acceder a la capa de Dominio de nuestra aplicación,
+        es decir, a nuestros servicios y entidades modelo, o al recurso que necesite.
+
+   Infraestructura:
+
+        Es la capa más externa de nuestra aplicación, casi completamente separada de la lógica comercial principal.
+        Es el responsable de recibir las solicitudes web realizadas y posteriormente enrutar dichas
+        solicitud al "puerto" o "controlador" apropiado que queremos consumir.
+
+        Según el framework que usaremos, también necesitaríamos un repositorio determinado interfaz, una entidad
+        equivalente a nuestra entidad core de negocio parametrizada de la manera pertinente para contactar correctamente
+        con nuestra Base de Datos y, por último, utilizar también la entidad declarada en la capa core como las
+        implementaciones de métodos que contactarían con la interfaz del repositorio que primero instanciamos en
+        la capa de Dominio.
+
+        La forma en que continuaríamos con esto sería llamando a nuestros controllers y comunicándonos con la
+        capa de Aplicación. En la capa de Aplicación, nuestro controlador será responsable de entrar
+        contacto con la interfaz del repositorio que declaramos en la capa Dominio. Luego, desde nuestra capa de
+        Infraestructura implementaremos dicha interfaz de repositorio, conectando la funcionalidad del framework con
+        las funcionalidades abstractas que queremos utilizar para comunicarnos con la Base de Datos en base a los
+        Servicios de capa de dominio que creamos.
