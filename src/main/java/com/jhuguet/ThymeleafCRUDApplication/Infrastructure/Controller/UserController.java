@@ -2,7 +2,6 @@ package com.jhuguet.ThymeleafCRUDApplication.Infrastructure.Controller;
 
 import com.jhuguet.ThymeleafCRUDApplication.Application.Dto.UserDto;
 import com.jhuguet.ThymeleafCRUDApplication.Application.Handlers.FilterUsersHandler;
-import com.jhuguet.ThymeleafCRUDApplication.Domain.Service.FilterUsers;
 import com.jhuguet.ThymeleafCRUDApplication.Domain.Model.User;
 import com.jhuguet.ThymeleafCRUDApplication.Domain.repository.UserService;
 import com.jhuguet.ThymeleafCRUDApplication.Infrastructure.Persistence.Entity.UserEntity;
