@@ -14,7 +14,7 @@ public class FilterUsers extends ApplicationEvent {
         if(filter.length() > 3) {
             this.filter = filter;
         } else {
-            throw new IllegalStateException("Requires minimum length to optimally work.");
+            throw new IllegalStateException("Requires minimum length to optimally work, please be more specific.");
         }
     }
 
@@ -24,4 +24,5 @@ public class FilterUsers extends ApplicationEvent {
                         x.getFirstName().trim().equalsIgnoreCase(filter))
                 .collect(Collectors.toList());
     }
+
 }
