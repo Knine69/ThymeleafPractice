@@ -6,6 +6,7 @@ import com.jhuguet.ThymeleafCRUDApplication.Domain.Model.User;
 import com.jhuguet.ThymeleafCRUDApplication.Domain.repository.UserService;
 import com.jhuguet.ThymeleafCRUDApplication.Infrastructure.Persistence.Entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private ApplicationEventPublisher applicationEventPublisher;
 
     @GetMapping("/")
     public String viewHomePage(Model model) {
