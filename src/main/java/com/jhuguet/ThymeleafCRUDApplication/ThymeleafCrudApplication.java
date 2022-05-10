@@ -3,9 +3,15 @@ package com.jhuguet.ThymeleafCRUDApplication;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+/*
+* Access Swagger documentation: http://localhost:8080/v3/api-docs
+*
+* Access Swagger UI documentation: http://localhost:8080/swagger-ui/index.html
+* */
+
+@EnableWebMvc
 @SpringBootApplication
 public class ThymeleafCrudApplication {
 
